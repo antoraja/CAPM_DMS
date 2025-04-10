@@ -1,0 +1,46 @@
+@server=http://localhost:4004
+@username=alice
+@password=
+
+
+### Attachments
+# @name Attachments_GET
+GET {{server}}/odata/v2/catalog/Attachments
+Authorization: Basic {{username}}:{{password}}
+
+
+### Attachments
+# @name Attachments_POST
+POST {{server}}/odata/v2/catalog/Attachments
+Content-Type: application/pdf
+Authorization: Basic {{username}}:{{password}}
+
+<./test.pdf
+
+
+### Attachments
+# @name Attachments_PATCH
+PATCH {{server}}/odata/v4/catalog/Attachments/29214025-fa49-4e9c-a7aa-00ff79f61cfa
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "29214025-fa49-4e9c-a7aa-00ff79f61cfa",
+  "folderId": "folderId-29214025",
+  "objectId": "objectId-29214025",
+  "mediaType": "mediaType-29214025",
+  "filename": "filename-29214025",
+  "size": 69,
+  "url": "url-29214025",
+  "createdAt": "2020-02-17T00:00:00.000Z",
+  "createdBy": "createdBy.he5op@example.org",
+  "modifiedAt": "2013-03-19T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.he5op@example.org"
+}
+
+
+### Attachments
+# @name Attachments_DELETE
+DELETE {{server}}/odata/v4/catalog/Attachments/29214025-fa49-4e9c-a7aa-00ff79f61cfa
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}

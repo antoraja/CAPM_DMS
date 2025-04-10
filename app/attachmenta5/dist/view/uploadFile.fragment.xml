@@ -1,0 +1,87 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:upload="sap.m.upload"
+    xmlns:uxap="sap.uxap">
+<Dialog >
+ <Table
+        id="attachments-table"
+        sticky="HeaderToolbar,ColumnHeaders"
+        width="auto"
+        class="sapFDynamicPageAlignContent"
+      
+        items="{
+            path:'attachmentItemsModel>/attachmentItems'
+        }">
+        
+        <headerToolbar>
+            <OverflowToolbar id="attachments-table-overflowToolbar">
+                <ToolbarSpacer id="attachments-table-overflowToolbar-toolbarSpacer"/>
+                <upload:ActionsPlaceholder
+                    id="attachments-table-overflowToolbar-upload"
+                    placeholderFor="UploadButtonPlaceholder"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        
+        <dependents   >
+            <plugins.UploadSetwithTable              
+                uploadEnabled ="{attachmentItemsModel>/created}"
+                httpRequestMethod="Post"
+                uploadUrl="{attachmentItemsModel>/uploadUrl}"
+                instantUpload="false"
+                multiple="false"
+                cloudFilePickerEnabled="true"
+                fileSizeExceeded="fileSizeExceed"
+                fileTypeMismatch="fileType"
+                actions="attachments-table-overflowToolbar-upload"
+                beforeInitiatingItemUpload="onAttachmentAdded"
+                uploadCompleted="onAfterUploadCompleted">
+                
+                <rowConfiguration >
+                    <upload.UploadItemConfiguration
+                        fileNamePath="fileName"
+                        mediaTypePath="mediaType"
+                        previewablePath="previewable"
+                        fileSizePath="fileSize"
+                        isTrustedSourcePath="trustedSource"/>
+                </rowConfiguration>
+                
+            </plugins.UploadSetwithTable>
+        </dependents>
+        
+        <columns>
+            <Column width="40%" >
+                <Label text="{i18n>filename}"/>
+            </Column>
+            <Column width="20%" demandPopin="true">
+                <Label text="{i18n>createdBy}"/>
+            </Column>
+            <Column width="20%" demandPopin="true">
+                <Label text="{i18n>createdAt}"/>
+            </Column>
+            <Column width="10%" hAlign="End"/>
+        </columns>
+        
+        <ColumnListItem >
+            <Link 
+                wrapping="true"               
+                text="{attachmentItemsModel>filename}"
+                target="_blank"
+                href="{attachmentItemsModel>url}"/>
+            
+            <Text              
+                text="{attachmentItemsModel>createdBy}"/>
+            
+            <Text               
+                text="{path: 'attachmentItemsModel>createdAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy HH:mm:ss' }}"/>
+            
+            <Button                
+                icon="sap-icon://decline"
+                type="Transparent"
+                press="onAttachmentDelete"/>
+        </ColumnListItem>
+        
+    </Table>
+    </Dialog>
+</core:FragmentDefinition>  

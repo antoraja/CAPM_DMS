@@ -1,0 +1,1 @@
+using dms_service as service from '../../srv/interactions_srv';

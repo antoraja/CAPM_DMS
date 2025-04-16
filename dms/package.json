@@ -1,0 +1,108 @@
+{
+  "name": "dms",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "^1.13.1",
+    "@cap-js/attachments": "1.1.7",
+    "@cap-js/change-tracking": "^1.0.7",
+    "@cap-js/hana": "^1",
+    "@cap-js/sdm": "^1.2.1",
+    "@sap-cloud-sdk/http-client": "^3.20.0",
+    "@sap-cloud-sdk/openapi-generator": "^3.20.0",
+    "@sap/cds": "^8.9",
+    "@sap/cds-common-content": "^2.1.0",
+    "@sap/xsenv": "^5",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "hdb": "^0.19.9",
+    "passport": "^0",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.6",
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7.9.8",
+    "@sap/hdi-deploy": "^4.9.5",
+    "rimraf": "^5.0.5",
+    "mbt": "^1.2.29"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "undeploy": "cf undeploy dms --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "kill": "kill -9 $(lsof -PiTCP -sTCP:LISTEN | grep 4004 | awk '{print $2}')",   
+    "watch-dms": "cds watch --open dms/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "strategy": "jwt"
+      },
+      "destinations": true,
+      "connectivity": true,
+      "db": {
+        "kind": "hana",
+        "impl": "@cap-js/hana",
+        "deploy-format": "hdbtable"
+      },
+      "attachments": {
+        "kind": "sdm",
+        "impl": "@cap-js/sdm/lib/sdm"
+      },
+      "sdm": {
+        "settings": {
+          "repositoryId": "0b25edc2-176d-4153-a3b4-64a6d16c1c8c"
+        }
+      },
+      "html5-repo": true,
+      "workzone": true,
+      "[production]": {
+        "db": {
+          "kind": "hana"
+        },
+        "auth": {
+          "kind": "xsuaa"
+        }
+      },
+      "[development]": {
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "carol": {
+              "roles": [
+                "admin"
+              ]
+            },
+            "dave": {
+              "roles": [
+                "support"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "server": {
+      "index": true,
+      "compression": false,
+      "maxRequestSize": "20mb",
+      "body_parser": {
+        "limit": "20mb"
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "sql": {
+      "native_hana_associations": false
+    }
+  },
+  "sapux": [
+    "app/dms"  
+  ]
+}

@@ -1,0 +1,135 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "sap.dms.dms",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.17.3",
+            "toolsId": "885c3442-383a-4c1f-bf95-6774aa069f62"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v2/dms-service/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "2.0"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "DMS-cap": {
+                    "semanticObject": "DMS",
+                    "action": "cap",
+                    "title": "{{DMS-cap.flpTitle}}",
+                    "subTitle": "{{DMS-cap.flpSubtitle}}",
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.134.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "sap.dms.dms.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "transition": "slide",
+                "type": "View",
+                "viewType": "XML",
+                "path": "sap.dms.dms.view",
+                "async": true,
+                "viewPath": "sap.dms.dms.view"
+            },
+            "routes": [
+                {
+                    "name": "RouteattachmentView",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetattachmentView"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetattachmentView": {
+                    "id": "attachmentView",
+                    "name": "attachmentView"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "sap.dms.dms.view.App",
+            "type": "XML",
+            "id": "App",
+            "async": true
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "dms.service"
+    }
+}

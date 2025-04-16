@@ -1,11 +1,15 @@
 {
-  "xsappname": "a5",
+  "xsappname": "dms",
   "tenant-mode": "dedicated",
   "description": "Security profile of called application",
   "scopes": [
     {
       "name": "uaa.user",
       "description": "UAA"
+    },
+    {
+      "name": "$XSAPPNAME.Callback",
+      "description": "Default scope"
     }
   ],
   "role-templates": [

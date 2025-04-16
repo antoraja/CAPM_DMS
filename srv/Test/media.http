@@ -1,0 +1,849 @@
+@user=alice
+@password=alice
+@url=http://localhost:4004
+
+GET {{url}}/odata/v2/dms-service
+Authorization: Basic {{user}}:{{password}}
+
+### Step 1: Create File Metadata Entry
+POST {{url}}/odata/v2/dms-service/dmsHeader
+Authorization: Basic {{user}}:{{password}}
+Content-Type: application/json
+
+{
+ "PurchaseNo": "1002"
+}
+
+### Step 1: Create File Entry
+POST {{url}}/odata/v2/dms-service/attachmentItems
+Authorization: Basic {{user}}:{{password}}
+Content-Type: application/json
+
+{
+ 
+}
+
+### Step 1: Create File Entry
+DELETE {{url}}/odata/v2/dms-service/attachmentItems
+Authorization: Basic {{user}}:{{password}}
+
+
+
+# # Fetch Attachments
+# GET {{url}}/odata/v2/etender-mstr/Attachments(ID='3000022564',app_typ='SingleT_Header',gid='2d25b47e-d65b-40ac-9d88-8b185dc29b43')/content
+# Authorization: Basic {{user}}:{{password}}
+# Content-Type: application/json
+
+# ###
+# GET {{url}}/odata/v2/etender-mstr/Attachments
+# Authorization: Basic {{user}}:{{password}}
+# Content-Type: application/json
+
+
+
+# ###
+# POST {{url}}/odata/v2/etender-mstr/SingleT_Header('3000022849')/attachments
+# Authorization: Basic {{user}}:{{password}}
+# Content-Type: image/png
+
+# < ./t2.png
+
+
+# ### Step 1: Upload File Content to the Created Entity
+# # PUT  {{url}}/odata/v2/etender-mstr/Attachments(ID='3000022382',app_typ='ceg',gid='')/content
+# # Authorization: Basic {{user}}:{{password}}
+# # Content-Type: image/png
+# # Content-Disposition: attachment; filename="test.png"
+# # filename:RR2.png
+# # mimeType:image/png
+# # # app_typ:ceg
+# # # header:{ "ID": "3000022859","filename": "test4.png","mimeType":"image/png","INTERACTION_ID":"3000022859" }
+# # # { "ID": "3000022859", 
+# # #   "filename": "test4.png", 
+# # #    "mimeType":"image/png",
+# # #     "INTERACTION_ID":"3000022859"
+# # # }
+
+# # < ./t2.png
+
+
+
+
+
+# # Authorization: Basic {{user}}:{{password}}
+
+# ### Step 2: Upload File Content to the Created Entity
+# # GET {{url}}/odata/v2/etender-mstr/Attachments(ID='3000022849',app_typ='ceg',gid='fdfdfdfd')
+# # GET {{url}}/odata/v2/etender-mstr/EtenderMstr(PurchaseNo='3000021477')?$expand=attachments($filter=app_typ eq 'pqc')
+
+# # GET {{url}}/odata/v2/etender-mstr/EtenderMstr(PurchaseNo='3300010609')?$expand=ceg,ceg/items
+# # Authorization: Basic {{user}}:{{password}}
+
+# ##Test NB
+# ## POST {{url}}/odata/v4/e-tender-update/changeTender
+# # POST {{url}}/odata/v4/e-tender-update/eTender(PurchaseNo='123456')/changeTender
+# # Content-Type: application/json
+
+# # {
+# #     "NewDocumentStatus": "A",
+# #     "NewWorkflowStatus": "C"
+# # }
+
+# # GET {{url}}/odata/v2/report-app/repPOApp?$filter=Status eq 'Approved'
+# # GET {{url}}/odata/v2/report-app/repPOApp?$filter=modifiedAt ge 2025-01-16T18:30:00.0000000Z and modifiedAt le 2025-01-18T12:23:55.0000000Z and Remark eq 'ok'
+# # Authorization: Basic {{user}}:{{password}}
+
+# # # #New request
+# # GET {{url}}/odata/v2/etender-mstr/EtenderMstr(PurchaseNo='3000022443')?$expand=checklist
+# # Authorization: Basic {{user}}:{{password}}
+
+# # GET {{url}}/odata/v2/etender-mstr/AdminF4help
+# # GET {{url}}/odata/v2/etender-mstr/BudgetF4help
+# # Authorization: Basic {{user}}:{{password}}
+
+
+# # PUT {{url}}/odata/v2/etender-mstr/comment_api(ID='3000022408',pro_Code='A',Emp_name='0RRRR',Emp_email='',Emp_Code='323233',Status='Approved',comments='Pl;ease re heck and tyr to validate the tike price amd er')
+# # Authorization: Basic {{user}}:{{password}}
+
+# # # GET {{url}}/odata/v2/etender-mstr/comment_api(ID='3000022408',no='1')
+# # GET {{url}}/odata/v2/etender-mstr/comment_api?$filter=ID eq '3300010598'
+# # Authorization: Basic {{user}}:{{password}}
+
+# # GET {{url}}/odata/v2/etender-mstr/EtenderMstr(PurchaseNo='3300010540')?$expand=pqc
+# # Authorization: Basic {{user}}:{{password}}
+
+# # GET   {{url}}/odata/v2/etender-mstr/PO_Off_Header('vishnu_kumars@mrpl.co.in')
+# # Authorization: Basic {{user}}:{{password}}
+
+# # DELETE   {{url}}/odata/v2/etender-mstr/SECOFFList_Item('30000224291')
+# # Authorization: Basic {{user}}:{{password}}
+
+# # GET   {{url}}/odata/v2/etender-mstr/Po_return_inten('3000022375')
+# # Authorization: Basic {{user}}:{{password}}
+# # GET   {{url}}/odata/v2/etender-mstr/CS_PDF('3000022312')/content
+# # Authorization: Basic {{user}}:{{password}}
+
+# # GET   {{url}}/odata/v2/etender-mstr/Process_Flow_Decision('3000022509')
+# # Authorization: Basic {{user}}:{{password}}
+
+
+
+# # DELETE {{url}}/odata/v2/etender-mstr/GMList_Item('3000022116')
+
+# # GET  {{url}}/odata/v2/etender-mstr/PR_App_Upd(ID='3000022564',Level=11,Emp_Code='00011989',Rejct_to='Dummy',status='Approved',comments='approve')
+# # Authorization: Basic {{user}}:{{password}}
+
+
+# # GET {{url}}/odata/v2/etender-mstr/EtenderMstr(PurchaseNo='3000022557')?$expand=ceg,ceg/items
+# # Authorization: Basic {{user}}:{{password}}
+# # GET {{url}}/odata/v2/etender-mstr/EMD_Header(ID='3000022312')
+# # Authorization: Basic {{user}}:{{password}}
+#                                 #   EtenderMstr(PurchaseNo='3000022284')?$expand=Pqcmm
+
+
+# #  GET {{url}}/odata/v2/etender-mstr/gm_user_get(ID='3000022569')
+# # Authorization: Basic {{user}}:{{password}}
+
+
+# #  GET   {{url}}/odata/v2/etender-mstr/Emp_Filter_Cond(ID='3000022559',ProcessCode='E')
+# # Authorization: Basic {{user}}:{{password}}
+
+# #  GET   {{url}}/odata/v2/etender-mstr/Previous_PO?$filter=Material eq '1000128779' and Plant eq 'PL01' and ID eq '3000022536'
+# # Authorization: Basic {{user}}:{{password}}
+
+
+# # GET   {{url}}/odata/v2/etender-mstr/TenderInp_PDF(ID='3000022282')/content
+# # Authorization: Basic {{user}}:{{password}}
+
+
+# GET   {{url}}/odata/v2/etender-mstr/VendorF4Help?$filter=loevm eq false and sperr eq false and sperm eq false
+# Authorization: Basic {{user}}:{{password}}
+
+# # Content-Type: application/json
+# # GET   {{url}}/odata/v2/etender-mstr/Final_link(ID='3300010510',Level= 0,Emp_Code='00010001')
+# # GET   {{url}}/odata/v2/etender-mstr/Final_list/$metadata
+
+# # GET   {{url}}/odata/v2/etender-mstr/Process_Flow_click(ID='3000022509',ProcessCode='O')
+# # Authorization: Basic {{user}}:{{password}}
+
+
+# # GET   {{url}}/odata/v2/etender-mstr/Po_return_inten('3000022237')
+# # Authorization: Basic {{user}}:{{password}}
+# # GET   {{url}}/odata/v2/etender-mstr/PO_App_Upd(ID='3000022509',ProcessCode='O',Level=11,Emp_Code='00012724',status='Approved',comments='ok')
+# # Authorization: Basic {{user}}:{{password}}
+
+# # GET   {{url}}/odata/v2/etender-mstr/PO_APP_list?$filter=ID eq '2000000074' and ProcessCode eq 'U'
+# # Authorization: Basic {{user}}:{{password}}
+
+# # GET   {{url}}/odata/v2/etender-mstr/Reject_To_F4?$filter=ID eq '3300010553'
+# # Authorization: Basic {{user}}:{{password}}
+
+
+# # POST  {{url}}/odata/v2/etender-mstr/ecs_ip_data
+# # Authorization: Basic {{user}}:{{password}}
+# # Content-Type: application/json
+
+# # {
+# # 	"T_REF_NO": "3000000018",
+# # 	"T_TYPE": "K",
+# # 	"DEPT_USER_NAME": "A",
+# #     "BIDDER_USER_ID" : "21004992,22006449,23001384,23001572"
+# # }
+
+
+# # PUT  {{url}}/odata/v2/etender-mstr/Capex_Admin(0000) 
+# # Authorization: Basic {{user}}:{{password}}
+# # Content-Type: application/json
+
+# # {
+# #   "ID": "0000",
+# #   "Department": "NA",
+# #   "Name_job": "NA",
+# #   "Location": "NA",
+# #   "Description": "OK",
+# #   "Cost_Estimate": "OK",
+# #   "Basis_Est": "OK",
+# #   "Phas_exp": "OK",
+# #   "Budget_typ": "OK",
+# #   "Propse_budget": "OK",
+# #   "vendors": "OK",
+# #   "implementation_period": "OK",
+# #   "Justification": "OK",
+# #   "status": "C",
+# #   "app": []
+# # }
+
+
+
+
+
+
+
+# # PUT  {{url}}/odata/v2/etender-mstr/EtenderMstr(PurchaseNo='3000022318')
+# # Authorization: Basic {{user}}:{{password}}
+# # Content-Type: application/json
+
+# # {
+# # 	"PurchaseNo": "3000022318",
+# # 	"DocumentStatus_code": "S",
+# # 	"ProcessCode_code": "A",
+# # 	"ceg": {
+# # 		"Amt_Budget": "100.00",
+# # 		"BAR_Att": false,
+# # 		"B_Rate": "test",
+# # 		"Backup_Qty": "test-Backup_Qty",
+# # 		"Backup_Rate": "test-Backup_Rate",
+# # 		"Backup_Uom": "test-Backup_Uom",
+# # 		"Budget_Prov": "test",
+# # 		"CostCenter": "test cost center",
+# # 		"Description": "test-Description",
+# # 		"EXP_FC_GST": "18.00",
+# # 		"EXP_FC_GST_val": "90.00",
+# # 		"EXP_Landed_Des": "Rupees Eighteen Lakh Three Thousand One Hundred Forty-One and Nine Paise",
+# # 		"EXP_PF": 20,
+# # 		"Est_Time": "120",
+# # 		"Est_Time_By": "test-Est_Time_By",
+# # 		"Exp_Dis": 0,
+# # 		"Exp_FC": 500,
+# # 		"Exp_GST_Set": 30,
+# # 		"Exp_GST_Set_val": "86428.62",
+# # 		"Exp_Insu_C": 0.05,
+# # 		"Exp_Insu_val": "944.31",
+# # 		"Exp_Landed": "1803141.09",
+# # 		"Exp_TPI": 10,
+# # 		"Exp_Tot_A_GST": "1888625.40",
+# # 		"Exp_Tot_B_GST": "1600620.00",
+# # 		"Exp_tot_Amt": "4058257.53",
+# # 		"Exp_tot_Amt_Dis": "4058257.53",
+# # 		"Finac": "test-Finac",
+# # 		"GST_Percent": "18.00",
+# # 		"GST_Vale": "288005.40",
+# # 		"Guidline": "test-Guidline",
+# # 		"Hist": "test-Hist",
+# # 		"ID": "3000022318",
+# # 		"Purcahse_Catag": null,
+# # 		"PurchaseNo_PurchaseNo": "3000022318",
+# # 		"Purchase_Group": null,
+# # 		"Scope": "test-Scope",
+# # 		"T_Aft_TPI": "1600030.00",
+# # 		"T_B_ITC": "1889569.71",
+# # 		"T_Val_E_Ins": "1888625.40",
+# # 		"Tot_Amt": "1803141.09",
+# # 		"Type_Ten": "test-Type_Ten",
+# # 		"VettedBy": true,
+# # 		"VettedBySubmit": true,
+# # 		"VettedByval": "1000000.00",
+# # 		"createdAt": "/Date(1736578293746)/",
+# # 		"createdBy": "shivaraj@mrpl.co.in",
+# # 		"modifiedAt": "/Date(1736581687093)/",
+# # 		"modifiedBy": "abhishek@mrpl.co.in",
+# # 		"items": [
+# # 			{
+# # 				"Basis_Est": "BUDGETERY_OFFER",
+# # 				"Budget_Rate": "1600000.00",
+# # 				"Description": " A33412A/B-ROTARY UNIT-INBOARD,",
+# # 				"Escalate_Price": "0.00",
+# # 				"Escalation": "0.00",
+# # 				"Final_Est": "1600000.00",
+# # 				"ID": "3000022318",
+# # 				"Item_Code": "00010",
+# # 				"Material": "1000056796",
+# # 				"PO_Date": null,
+# # 				"PO_Rate": "0.00",
+# # 				"Plant": "PL01",
+# # 				"Prev_PO": "",
+# # 				"Qty": "1.000",
+# # 				"ServiceCode": "",
+# # 				"ServiceDes": "",
+# # 				"Total_Amt": "1600000.00",
+# # 				"UOM": "EA",
+# # 				"createdAt": "/Date(1736578293746)/",
+# # 				"createdBy": "shivaraj@mrpl.co.in",
+# # 				"interaction_ID": "3000000018",
+# # 				"modifiedAt": "/Date(1736578293746)/",
+# # 				"modifiedBy": "shivaraj@mrpl.co.in",
+# # 				"serviceItem": "1",
+# # 				"interaction": {
+# # 					"__deferred": {
+# # 						"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_Itm(ID='3000022196',Item_Code='00010',serviceItem='1',ServiceCode='')/interaction"
+# # 					}
+# # 				},
+# # 				"changes": {
+# # 					"__deferred": {
+# # 						"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_Itm(ID='3000022196',Item_Code='00010',serviceItem='1',ServiceCode='')/changes"
+# # 					}
+# # 				},
+# # 				"__metadata": {
+# # 					"type": "etender_mstr.Ceg_Itm",
+# # 					"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_Itm(ID='3000022196',Item_Code='00010',serviceItem='1',ServiceCode='')"
+# # 				}
+# # 			}
+# # 		],
+# # 		"app": [],
+# # 		"vetBy": [
+# # 			{
+# # 				"Emp_Auth_l": "VETTED BY CEG - INDENTING DEPT",
+# # 				"Emp_Code": "",
+# # 				"Emp_Desg": "",
+# # 				"Emp_email": "",
+# # 				"Emp_name": "",
+# # 				"ID": "3000000018",
+# # 				"Level": 0,
+# # 				"Next_level": 1,
+# # 				"Remark": null,
+# # 				"Status": "Not Started",
+# # 				"createdAt": "/Date(1736578293746)/",
+# # 				"createdBy": "shivaraj@mrpl.co.in",
+# # 				"interaction_ID": "3000022196",
+# # 				"modifiedAt": "/Date(1736580195867)/",
+# # 				"modifiedBy": "abhishek@mrpl.co.in",
+# # 				"interaction": {
+# # 					"__deferred": {
+# # 						"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_VtBy(ID='3000022196',Level=0)/interaction"
+# # 					}
+# # 				},
+# # 				"__metadata": {
+# # 					"type": "etender_mstr.Ceg_VtBy",
+# # 					"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_VtBy(ID='3000022196',Level=0)"
+# # 				}
+# # 			},
+# # 			{
+# # 				"Emp_Auth_l": "VETTED BY CEG - MATERIALS",
+# # 				"Emp_Code": "",
+# # 				"Emp_Desg": "",
+# # 				"Emp_email": "",
+# # 				"Emp_name": "",
+# # 				"ID": "3000022196",
+# # 				"Level": 1,
+# # 				"Next_level": 2,
+# # 				"Remark": null,
+# # 				"Status": "Not Started",
+# # 				"createdAt": "/Date(1736578293746)/",
+# # 				"createdBy": "shivaraj@mrpl.co.in",
+# # 				"interaction_ID": "3000022196",
+# # 				"modifiedAt": "/Date(1736580195867)/",
+# # 				"modifiedBy": "abhishek@mrpl.co.in",
+# # 				"interaction": {
+# # 					"__deferred": {
+# # 						"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_VtBy(ID='3000022196',Level=1)/interaction"
+# # 					}
+# # 				},
+# # 				"__metadata": {
+# # 					"type": "etender_mstr.Ceg_VtBy",
+# # 					"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_VtBy(ID='3000022196',Level=1)"
+# # 				}
+# # 			},
+# # 			{
+# # 				"Emp_Auth_l": "VETTED BY CEG - FINANCE",
+# # 				"Emp_Code": "00012835",
+# # 				"Emp_Desg": "ENGINEER",
+# # 				"Emp_email": "arvind.choudhary@mrpl.co.in",
+# # 				"Emp_name": "ARVIND CHOUDHARY",
+# # 				"ID": "3000022196",
+# # 				"Level": 2,
+# # 				"Next_level": 2,
+# # 				"Remark": null,
+# # 				"Status": "Not Started",
+# # 				"createdAt": "/Date(1736578293746)/",
+# # 				"createdBy": "shivaraj@mrpl.co.in",
+# # 				"interaction_ID": "3000022196",
+# # 				"modifiedAt": "/Date(1736580195867)/",
+# # 				"modifiedBy": "abhishek@mrpl.co.in",
+# # 				"interaction": {
+# # 					"__deferred": {
+# # 						"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_VtBy(ID='3000022196',Level=2)/interaction"
+# # 					}
+# # 				},
+# # 				"__metadata": {
+# # 					"type": "etender_mstr.Ceg_VtBy",
+# # 					"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_VtBy(ID='3000022196',Level=2)"
+# # 				}
+# # 			}
+# # 		],
+# # 		"PurchaseNo": {
+# # 			"__deferred": {
+# # 				"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_Header('3000022196')/PurchaseNo"
+# # 			}
+# # 		},
+# # 		"changes": {
+# # 			"__deferred": {
+# # 				"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_Header('3000022196')/changes"
+# # 			}
+# # 		},
+# # 		"__metadata": {
+# # 			"type": "etender_mstr.Ceg_Header",
+# # 			"uri": "https://port8080-workspaces-ws-z9tpn.in30.applicationstudio.cloud.sap,mrpl_etender_backend.dest:443/destinations/MRPL_ETENDER_BACKEND/odata/v2/etender-mstr/Ceg_Header('3000022196')"
+# # 		}
+# # 	}
+# # }
+
+
+# # # ### Step 3: Upload File Content to the Created Entity
+# # # GET {{url}}/odata/v2/etender-mstr/Previous_PO?$filter=Material eq '6000105178' and Plant eq 'PL01'
+# # # # GET {{url}}/odata/v2/etender-mstr/Attachments(ID='3000022382',app_typ='ceg',gid='73772a01-07b8-4419-8827-3f11e5cf4dae')/content
+# # # Authorization: Basic {{user}}:{{password}}
+
+
+
+# # # ### Step 4: Upload File Content to the Created Entity
+# # # DELETE  {{url}}/odata/v2/etender-mstr/Attachments(ID='3000022382',app_typ='ceg',gid='73772a01-07b8-4419-8827-3f11e5cf4dae')
+# # # Authorization: Basic {{user}}:{{password}}
+
+
+# # PUT  {{url}}/odata/v2/etender-mstr/EtenderMstr(PurchaseNo='3900000892')
+# # Authorization: Basic {{user}}:{{password}}
+# # Content-Type: application/json
+
+# # {
+# #   "PurchaseNo": "3900000892",
+# #   "DocumentStatus_code": "S",
+# #   "ProcessCode_code": "I",
+# #   "tenderrecipt": {
+# #     "Gem_Bid_no": "511000000",
+# #     "Header_Txt": "ARC FOR TS",
+# #     "ID": "3900000892",
+# #     "Intend_By": "00010317 - SATISH G SHETTY",
+# #     "PR_Amt": "0.00",
+# #     "Purcahse_Catag": "2",
+# #     "PurchaseNo_PurchaseNo": "3900000892",
+# #     "Purchase_Group": null,
+# #     "Tender_Mode": "GeM",
+# #     "Tender_Type": "20C-LTD TNDR-DOM SER",
+# #     "createdAt": "/Date(1741589553269)/",
+# #     "createdBy": "satish@mrpl.co.in",
+# #     "modifiedAt": "/Date(1741589553269)/",
+# #     "modifiedBy": "satish@mrpl.co.in",
+# #     "items": [
+# #       {
+# #         "City": null,
+# #         "Consider_TR": true,
+# #         "FR_Vendor": null,
+# #         "ID": "3900000892",
+# #         "Indus_Typ": "",
+# #         "Item_Code": "1",
+# #         "PAN": null,
+# #         "RFQ_No": "",
+# #         "Reason_Remark": null,
+# #         "SC_ST": null,
+# #         "Street": null,
+# #         "TR_Remark": "Nil",
+# #         "Tend_Recvd_remark": "Received",
+# #         "Vendor": "100000258",
+# #         "Vendor_Name": "M/s Plantek",
+# #         "createdAt": "/Date(1741589553269)/",
+# #         "createdBy": "satish@mrpl.co.in",
+# #         "interaction_ID": "3900000892",
+# #         "modifiedAt": "/Date(1741589553269)/",
+# #         "modifiedBy": "satish@mrpl.co.in",
+# #         "interaction": {
+# #           "__deferred": {
+# #             "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/95c29a9e-3d2a-4a1e-85c6-d5bb491fd17d.mrpletender.mrpletendertenderrecipt/~d34bfae9-d4f6-4486-9192-d337c530639f~/odata/v2/etender-mstr/TenderRecp_Item(ID='3900000892',Item_Code='1')/interaction"
+# #           }
+# #         },
+# #         "__metadata": {
+# #           "type": "etender_mstr.TenderRecp_Item",
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/95c29a9e-3d2a-4a1e-85c6-d5bb491fd17d.mrpletender.mrpletendertenderrecipt/~d34bfae9-d4f6-4486-9192-d337c530639f~/odata/v2/etender-mstr/TenderRecp_Item(ID='3900000892',Item_Code='1')"
+# #         }
+# #       },
+# #       {
+# #         "City": null,
+# #         "Consider_TR": true,
+# #         "FR_Vendor": null,
+# #         "ID": "3900000892",
+# #         "Indus_Typ": "",
+# #         "Item_Code": "2",
+# #         "PAN": null,
+# #         "RFQ_No": "",
+# #         "Reason_Remark": null,
+# #         "SC_ST": null,
+# #         "Street": null,
+# #         "TR_Remark": "Nil",
+# #         "Tend_Recvd_remark": "Recived",
+# #         "Vendor": "10000111",
+# #         "Vendor_Name": "M/s Anugraha",
+# #         "createdAt": "/Date(1741589553269)/",
+# #         "createdBy": "satish@mrpl.co.in",
+# #         "interaction_ID": "3900000892",
+# #         "modifiedAt": "/Date(1741589553269)/",
+# #         "modifiedBy": "satish@mrpl.co.in",
+# #         "interaction": {
+# #           "__deferred": {
+# #             "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/95c29a9e-3d2a-4a1e-85c6-d5bb491fd17d.mrpletender.mrpletendertenderrecipt/~d34bfae9-d4f6-4486-9192-d337c530639f~/odata/v2/etender-mstr/TenderRecp_Item(ID='3900000892',Item_Code='2')/interaction"
+# #           }
+# #         },
+# #         "__metadata": {
+# #           "type": "etender_mstr.TenderRecp_Item",
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/95c29a9e-3d2a-4a1e-85c6-d5bb491fd17d.mrpletender.mrpletendertenderrecipt/~d34bfae9-d4f6-4486-9192-d337c530639f~/odata/v2/etender-mstr/TenderRecp_Item(ID='3900000892',Item_Code='2')"
+# #         }
+# #       }
+# #     ],
+# #     "PurchaseNo": {
+# #       "__deferred": {
+# #         "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/95c29a9e-3d2a-4a1e-85c6-d5bb491fd17d.mrpletender.mrpletendertenderrecipt/~d34bfae9-d4f6-4486-9192-d337c530639f~/odata/v2/etender-mstr/TenderRecp_Header('3900000892')/PurchaseNo"
+# #       }
+# #     },
+# #     "__metadata": {
+# #       "type": "etender_mstr.TenderRecp_Header",
+# #       "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/95c29a9e-3d2a-4a1e-85c6-d5bb491fd17d.mrpletender.mrpletendertenderrecipt/~d34bfae9-d4f6-4486-9192-d337c530639f~/odata/v2/etender-mstr/TenderRecp_Header('3900000892')"
+# #     }
+# #   }
+# # }
+
+# # GET  {{url}}/odata/v2/etender-mstr/ceg_item_refresh('3000022464')
+# # Authorization: Basic {{user}}:{{password}}
+# # Content-Type: application/json
+
+
+# # PUT  {{url}}/odata/v2/etender-mstr/ceg_excel_upload('3000022473')
+# # Authorization: Basic {{user}}:{{password}}
+# # Content-Type: application/json
+
+# # {
+# #   "items": [
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "10",
+# #       "ServiceDes": "QRTLY SERVICING CAMERA",
+# #       "ServiceCode": "1009119",
+# #       "Basis_Est": "Test",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "100000.00",
+# #       "comment": "T1"
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "20",
+# #       "ServiceDes": "QRTLY SERVICING OUTDOOR HOUSING",
+# #       "ServiceCode": "1009120",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "40",
+# #       "ServiceDes": "QRTLY SERVICING RDU",
+# #       "ServiceCode": "1009122",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "50",
+# #       "ServiceDes": "QRTLY SERVICING MULTIPLEXER",
+# #       "ServiceCode": "1009125",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "60",
+# #       "ServiceDes": "QRTLY SERVICING SWITCHER",
+# #       "ServiceCode": "1009128",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "70",
+# #       "ServiceDes": "QRTLY SERVICING PSU",
+# #       "ServiceCode": "1009129",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "80",
+# #       "ServiceDes": "QRTLY SERVICING DVR",
+# #       "ServiceCode": "1009131",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "90",
+# #       "ServiceDes": "QRTLY SERVICING UPS",
+# #       "ServiceCode": "1009132",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "100",
+# #       "ServiceDes": "QRTLY SERVICING IR UNIT",
+# #       "ServiceCode": "1009133",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "110",
+# #       "ServiceDes": "BREAKDOWN CALLS - HONEYWELL CCTV",
+# #       "ServiceCode": "1009459",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "20",
+# #       "Material": "",
+# #       "Description": "Servicing of CCTV",
+# #       "serviceItem": "120",
+# #       "ServiceDes": "55T CRANE RADIATOR REPAIR JOB",
+# #       "ServiceCode": "1002918",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "0.00",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     },
+# #     {
+# #       "Item_Code": "30",
+# #       "Material": "1000170601",
+# #       "Description": "BA33301&02,CERAMIC FIBER SABER BLOK-3",
+# #       "serviceItem": ".",
+# #       "ServiceDes": "",
+# #       "ServiceCode": "",
+# #       "Basis_Est": "PREVIOUS_PO",
+# #       "Escalation": "6.71",
+# #       "Budget_Rate": "0.00",
+# #       "comment": ""
+# #     }
+# #   ]
+# # }
+# # # PUT  {{url}}/odata/v2/etender-mstr/PO_Off_Header(UNAME='shivaraj@mrpl.co.in')
+# # # Authorization: Basic {{user}}:{{password}}
+# # # Content-Type: application/json
+
+# # {
+# #   "gm": [
+# #     {
+# #       "DocumentStatus": "Check List",
+# #       "ID": "3000022225",
+# #       "WorkflowStatus": "Approved",
+# #       "comment": null,
+# #       "createdAt": "/Date(1741702657282)/",
+# #       "createdBy": "shivaraj@mrpl.co.in",
+# #       "curr": "INR",
+# #       "date": "20.01.2025",
+# #       "interaction_UNAME": "shivaraj@mrpl.co.in",
+# #       "modifiedAt": "/Date(1741702674700)/",
+# #       "modifiedBy": "shivaraj@mrpl.co.in",
+# #       "no_item": "1 ",
+# #       "return": null,
+# #       "sect_usr": null,
+# #       "status": "C",
+# #       "type": "Material Pur Reqn",
+# #       "val": "437190.78",
+# #       "interaction": {
+# #         "__deferred": {
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022225')/interaction"
+# #         }
+# #       },
+# #       "__metadata": {
+# #         "type": "etender_mstr.GMList_Item",
+# #         "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022225')"
+# #       }
+# #     },
+# #     {
+# #       "DocumentStatus": "Check List",
+# #       "ID": "3000022237",
+# #       "WorkflowStatus": "Approved",
+# #       "comment": "ok",
+# #       "createdAt": "/Date(1741418030100)/",
+# #       "createdBy": "shivaraj@mrpl.co.in",
+# #       "curr": "INR",
+# #       "date": "21.01.2025",
+# #       "interaction_UNAME": "shivaraj@mrpl.co.in",
+# #       "modifiedAt": "/Date(1741702674700)/",
+# #       "modifiedBy": "shivaraj@mrpl.co.in",
+# #       "no_item": "2 ",
+# #       "return": null,
+# #       "sect_usr": "00011989",
+# #       "status": "C",
+# #       "type": "Material Pur Reqn",
+# #       "val": "788257.82",
+# #       "interaction": {
+# #         "__deferred": {
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022237')/interaction"
+# #         }
+# #       },
+# #       "__metadata": {
+# #         "type": "etender_mstr.GMList_Item",
+# #         "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022237')"
+# #       }
+# #     },
+# #     {
+# #       "interaction_UNAME": "shivaraj@mrpl.co.in",
+# #       "ID": "3000022316",
+# #       "type": "Material Pur Reqn",
+# #       "no_item": "2 ",
+# #       "WorkflowStatus": "Approved",
+# #       "DocumentStatus": "CEG Vetted By",
+# #       "date": "05.03.2025",
+# #       "val": "2240493.61",
+# #       "curr": "INR",
+# #       "interaction": {
+# #         "__deferred": {
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022316')/interaction"
+# #         }
+# #       },
+# #       "__metadata": {
+# #         "type": "etender_mstr.GMList_Item",
+# #         "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022316')"
+# #       }
+# #     },
+# #     {
+# #       "DocumentStatus": "Check List",
+# #       "ID": "3000022333",
+# #       "WorkflowStatus": "Approved",
+# #       "comment": null,
+# #       "createdAt": "/Date(1741702657282)/",
+# #       "createdBy": "shivaraj@mrpl.co.in",
+# #       "curr": "INR",
+# #       "date": "07.03.2025",
+# #       "interaction_UNAME": "shivaraj@mrpl.co.in",
+# #       "modifiedAt": "/Date(1741702674700)/",
+# #       "modifiedBy": "shivaraj@mrpl.co.in",
+# #       "no_item": "1 ",
+# #       "return": null,
+# #       "sect_usr": null,
+# #       "status": "C",
+# #       "type": "Material Pur Reqn",
+# #       "val": "0.00",
+# #       "interaction": {
+# #         "__deferred": {
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022333')/interaction"
+# #         }
+# #       },
+# #       "__metadata": {
+# #         "type": "etender_mstr.GMList_Item",
+# #         "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022333')"
+# #       }
+# #     },
+# #     {
+# #       "DocumentStatus": "CEG Vetted By",
+# #       "ID": "3000022373",
+# #       "WorkflowStatus": "Approved",
+# #       "comment": "Please process",
+# #       "createdAt": "/Date(1741686966110)/",
+# #       "createdBy": "shivaraj@mrpl.co.in",
+# #       "curr": "INR",
+# #       "date": "11.03.2025",
+# #       "interaction_UNAME": "shivaraj@mrpl.co.in",
+# #       "modifiedAt": "/Date(1741702674700)/",
+# #       "modifiedBy": "shivaraj@mrpl.co.in",
+# #       "no_item": "3 ",
+# #       "return": null,
+# #       "sect_usr": "00011635",
+# #       "status": "C",
+# #       "type": "Material Pur Reqn",
+# #       "val": "2099749.33",
+# #       "interaction": {
+# #         "__deferred": {
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022373')/interaction"
+# #         }
+# #       },
+# #       "__metadata": {
+# #         "type": "etender_mstr.GMList_Item",
+# #         "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022373')"
+# #       }
+# #     },
+# #     {
+# #       "interaction_UNAME": "shivaraj@mrpl.co.in",
+# #       "ID": "3000022375",
+# #       "type": "Material Pur Reqn",
+# #       "no_item": "2 ",
+# #       "WorkflowStatus": "Approved",
+# #       "DocumentStatus": "Check List",
+# #       "date": "11.03.2025",
+# #       "val": "254327.91",
+# #       "curr": "INR",
+# #       "interaction": {
+# #         "__deferred": {
+# #           "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022375')/interaction"
+# #         }
+# #       },
+# #       "__metadata": {
+# #         "type": "etender_mstr.GMList_Item",
+# #         "uri": "https://qas-mrpl-1hppzhg0.launchpad.cfapps.in30.hana.ondemand.com/db3757bd-3389-4268-bc31-11b969a5198f.mrpletenderpurchaseofficer.mrpletenderpurchaseofficer/~42009c52-9f6e-4904-b10f-f8786888576b~/odata/v2/etender-mstr/GMList_Item('3000022375')"
+# #       },
+# #       "sect_usr": "00011989"
+# #     }
+# #   ]
+# # }

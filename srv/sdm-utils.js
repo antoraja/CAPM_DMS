@@ -1,29 +1,49 @@
 
 const cds = require('@sap/cds')
 const { executeHttpRequest } = require('@sap-cloud-sdk/http-client')
-// const { SDM } = require('./config')
-const { PassThrough } = require('stream')
+const { SDM } = require('./config')
+const { Readable,PassThrough } = require('stream')
 const FormData = require('form-data')
 
 // const log = cds.log('sdm-utils')
-
-const getFileContent = async (objectId) => {
+const getFileContent1 = async (objectId, folderId) => {
     const requestConfig = {
         method: "GET",
         responseType: "arraybuffer",
-        url: "browser/" + "0b25edc2-176d-4153-a3b4-64a6d16c1c8c" + "/root",
+        url: "browser/" + SDM.REPOSITORY_ID + "/root/" + folderId,
         params: {
             objectId: objectId,
             cmisselector: "content"
         }
     }
-    return _executeRequest(requestConfig)
+    // console.log(requestConfig);
+    // _executeRequest(requestConfig)
+    var ret = await _executeRequest(requestConfig);
+    return ret; 
+    return { value: Readable.from(ret.data), typ : ret.headers['content-type'] };
+}
+
+const getFileContent = async (objectId, folderId) => {
+    const requestConfig = {
+        method: "GET",
+        responseType: "arraybuffer",
+        url: "browser/" + SDM.REPOSITORY_ID + "/root/" + folderId,
+        params: {
+            objectId: objectId,
+            cmisselector: "content"
+        }
+    }
+    // console.log(requestConfig);
+    // _executeRequest(requestConfig)
+    var ret = await _executeRequest(requestConfig);
+    // return ret; 
+    return { value: Readable.from(ret.data), typ : ret.headers['content-type'] };
 }
 
 const getObjectProperties = async (objectId) => {
     const requestConfig = {
         method: "GET",
-        url: "browser/" + "0b25edc2-176d-4153-a3b4-64a6d16c1c8c" + "/root",
+        url: "browser/" + SDM.REPOSITORY_ID + "/root",
         params: {
             objectId: objectId,
             cmisselector: "properties"
@@ -47,11 +67,10 @@ const createFolder = async (folderName) => {
 
     const requestConfig = {
         method: "POST",
-        url: "browser/" + "0b25edc2-176d-4153-a3b4-64a6d16c1c8c" + "/root/",
+        url: "browser/" + SDM.REPOSITORY_ID + "/root/",
         headers: headers,
         data: data
     }
-    console.log("createFolder-request:",requestConfig)
     return _executeRequest(requestConfig)
 }
 
@@ -64,7 +83,7 @@ const createDocumentInFolder = async (folderName, fileName, contentType, content
     formData.append("propertyId[1]", "cmis:objectTypeId")
     formData.append("propertyValue[1]", "cmis:document")
     console.log("T2");
-    
+    // https://community.sap.com/t5/technology-q-a/sap-cap-reading-file-from-passthrough-stream/qaq-p/12553465?attachment-id=30244
     formData.append("file", streamBuffer, {
         "filename": fileName,
         "contentType": contentType
@@ -77,7 +96,7 @@ const createDocumentInFolder = async (folderName, fileName, contentType, content
     
     const requestConfig = {
         method: "POST",
-        url: "browser/" + "0b25edc2-176d-4153-a3b4-64a6d16c1c8c" + "/root/" + folderName,
+        url: "browser/" + SDM.REPOSITORY_ID + "/root/" + folderName,
         headers: headers,
         data: data
     }
@@ -93,7 +112,7 @@ const deleteDocumentInFolder = async (folderId, documentId) => {
     const headers = formData.getHeaders()
     const requestConfig = {
         method: "POST",
-        url: "browser/" + "0b25edc2-176d-4153-a3b4-64a6d16c1c8c" + "/root/" + folderId,
+        url: "browser/" + SDM.REPOSITORY_ID + "/root/" + folderId,
         headers: headers,
         data: data
     }
@@ -119,36 +138,20 @@ const _transformStreamToBuffer = (data) => {
     })
 }
 
-// const getFolder = (folderName) => {  
-//     const requestConfig = {
-//         method: "GET",
-//         url: "browser/" + "0b25edc2-176d-4153-a3b4-64a6d16c1c8c",
-//         params: {
-//             q: encodeURIComponent(`SELECT * FROM cmis:folder WHERE cmis:name = '${folderName}'`),
-//             cmisselector: "query"
-//         }
-//     }
-//     return _executeRequest(requestConfig);
-// }
 const getFolder = (folderName) => {  
     const requestConfig = {
         method: "GET",
-        url: "browser/" + "0b25edc2-176d-4153-a3b4-64a6d16c1c8c",
+        url: "browser/" + SDM.REPOSITORY_ID,
         params: {
             q: encodeURIComponent(`SELECT cmis:objectId, cmis:name FROM cmis:folder WHERE cmis:name = '${folderName}'`),
             cmisselector: "query"
         }
-    } 
+    }
     return _executeRequest(requestConfig);
 }
 
-// const getOrCreateFolderId = async (folderName) => {
-//     const folderId = (await getFolder(folderName))?.data?.results[0]?.properties["cmis:objectId"]?.value
-//     return folderId ? folderId : (await createFolder(folderName))?.data?.properties["cmis:objectId"]?.value
-// } 
 const getOrCreateFolderId = async (folderName) => {
     const folderId = (await getFolder(folderName))?.data?.results[0]?.properties["cmis:objectId"]?.value
-    console.log("folder:",folderId)
     return folderId ? folderId : (await createFolder(folderName))?.data?.properties["cmis:objectId"]?.value
 } 
 
@@ -157,18 +160,13 @@ const getFolderId = async (folderName) => {
     return folderId ? folderId : ''
 }
 
-const _executeRequest = (requestConfig) => {
+const _executeRequest = async (requestConfig) => {
     // log._info && log.info(requestConfig.method, requestConfig.url, 'to SDM');
     console.log(requestConfig.method, 'to_SDM');
-    // requestConfig.method = "PUT"
-    // requestConfig.fetchCsrfToken = false
-    var repo = "0b25edc2-176d-4153-a3b4-64a6d16c1c8c"
-    console.log("req:", requestConfig);
-    if(requestConfig.method == "POST"){
-        requestConfig.url = "browser/" + repo + "/root/",
-        requestConfig.fetchCsrfToken = false
-    }
-    return executeHttpRequest({ destinationName: 'EB_GECM_SDM' },requestConfig);
+    // return executeHttpRequest({ destinationName: SDM.DESTINATION_NAME }, requestConfig);
+    const ret = await executeHttpRequest({ destinationName: SDM.DESTINATION_NAME }, requestConfig);
+    return ret;
+
 }
 
 
@@ -180,5 +178,6 @@ module.exports = {
     deleteDocumentInFolder,
     getFolder,
     getFolderId,
-    getOrCreateFolderId
+    getOrCreateFolderId,
+    getFileContent1
 }

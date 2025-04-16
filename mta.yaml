@@ -1,146 +1,178 @@
 _schema-version: 3.3.0
-ID: a5
-description: A simple CAP project.
+ID: dms
+description: DMS CAP project.
 version: 1.0.0
 modules:
-  - name: a5-srv
-    type: nodejs
-    path: gen/srv
-    requires:
-      - name: a5-auth
-      - name: a5-db
-      - name: a5-connectivity
-      - name: a5-destination-service
-    provides:
-      - name: srv-api
-        properties:
-          srv-url: ${default-url}
+- name: dms-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: dms-auth
+  - name: dms-db
+  - name: dms-connectivity
+  - name: dms-destination    
+  - name: default_sdm  
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+- name: dms-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: dms-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: dms
+  type: approuter.nodejs
+  path: app/router
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: dms-auth
+  - name: dms-destination
+  - name: dms-html5-runtime
+  provides:
+  - name: app-api
+    properties:
+      app-protocol: ${protocol}
+      app-uri: ${default-uri}
+  parameters:
+    disk-quota: 256M
+    keep-existing-routes: true
+    memory: 256M
+- name: dms-app-deployer
+  type: com.sap.application.content
+  path: gen
+  requires:
+  - name: dms-html5-repo-host
     parameters:
-      buildpack: nodejs_buildpack
-      instances: 1
-    build-parameters:
-      builder: npm-ci
-  - name: a5-db-deployer
-    type: hdb
-    path: gen/db
+      content-target: true
+  build-parameters:
+    build-result: app/
     requires:
-      - name: a5-db
+    - artifacts:
+      - sapdmsdms.zip
+      name: sapdmsdms
+      target-path: app/
+- name: dms-destinations
+  type: com.sap.application.content
+  requires:
+  - name: dms-auth
     parameters:
-      buildpack: nodejs_buildpack
-  - name: a5-destination-content
-    type: com.sap.application.content
-    requires:
-      - name: a5-destination-service
-        parameters:
-          content-target: true
-      - name: a5_html_repo_host
-        parameters:
-          service-key:
-            name: a5_html_repo_host-key
-      - name: a5-auth
-        parameters:
-          service-key:
-            name: a5-auth-key
+      service-key:
+        name: dms-auth-key
+  - name: dms-html5-repo-host
     parameters:
-      content:
+      service-key:
+        name: dms-html5-repo-host-key
+  - name: srv-api
+  - name: dms-destination
+    parameters:
+      content-target: true
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: dms-html5-repository
+          ServiceInstanceName: dms-html5-repo-host
+          ServiceKeyName: dms-html5-repo-host-key
+          sap.cloud.service: dms.service
+        - Authentication: OAuth2UserTokenExchange
+          Name: dms-auth
+          ServiceInstanceName: dms-auth
+          ServiceKeyName: dms-auth-key
+          sap.cloud.service: dms.service
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+- name: sapdmsdms
+  type: html5
+  path: app/dms
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: dms-auth
+  type: org.cloudfoundry.managed-service
+  parameters:   
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: dms-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: dms-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+- name: dms-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
         instance:
           destinations:
-            - Name: a5approuter_a5_html_repo_host
-              ServiceInstanceName: a5-html5-app-host-service
-              ServiceKeyName: a5_html_repo_host-key
-              sap.cloud.service: a5approuter
-            - Authentication: OAuth2UserTokenExchange
-              Name: a5approuter_a5_auth
-              ServiceInstanceName: a5-auth
-              ServiceKeyName: a5-auth-key
-              sap.cloud.service: a5approuter
-          existing_destinations_policy: ignore
-    build-parameters:
-      no-source: true
-  - name: a5-app-content
-    type: com.sap.application.content
-    path: .
-    requires:
-      - name: a5_html_repo_host
-        parameters:
-          content-target: true
-    build-parameters:
-      build-result: resources
-      requires:
-        - artifacts:
-            - attachmenta5.zip
-          name: attachmenta5
-          target-path: resources/
-  - name: attachmenta5
-    type: html5
-    path: app/attachmenta5
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms:
-        []
-resources:
-  - name: a5-auth
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        tenant-mode: dedicated
-        xsappname: a5
-      path: ./xs-security.json
-      service: xsuaa
-      service-plan: application
-  - name: a5-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
-  - name: a5-destination-service
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        HTML5Runtime_enabled: true
-        init_data:
-          instance:
-            destinations:
-              - Authentication: NoAuthentication
-                Name: ui5
-                ProxyType: Internet
-                Type: HTTP
-                URL: https://ui5.sap.com
-              - Authentication: NoAuthentication
-                HTML5.DynamicDestination: true
-                HTML5.ForwardAuthToken: true
-                Name: a5-srv-api
-                ProxyType: Internet
-                Type: HTTP
-                URL: ~{srv-api/srv-url}
-            existing_destinations_policy: update
-        version: 1.0.0
-      service: destination
-      service-name: a5-destination-service
-      service-plan: lite
-    requires:
-      - name: srv-api
-  - name: a5_html_repo_host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-name: a5-html5-app-host-service
-      service-plan: app-host
-  - name: a5-connectivity
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: connectivity
-      service-plan: lite
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: dms-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+    service: destination
+    service-plan: lite
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+- name: dms-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: default_sdm
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: sdm
+    service-plan: standard
+- name: dms-html5-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-    - builder: custom
-      commands:
-        - npm ci
-        - npx cds build --production
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

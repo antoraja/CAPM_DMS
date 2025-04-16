@@ -1,0 +1,11 @@
+{
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/odata/.*",
+      "target": "/odata/",
+      "authenticationType": "xsuaa",
+      "destination": "dms-srv-api"
+    }
+  ]
+}
